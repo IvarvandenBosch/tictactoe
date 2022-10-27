@@ -1,0 +1,98 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #111111;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+table td {
+    width: 200px;
+    border: 1px solid gray;
+    height: 200px;
+    text-align: center;
+    font-size: 80px;
+    cursor: pointer;
+    aspect-ratio: 1;
+}
+
+.reset {
+    padding-inline: 15px;
+    padding-block: 7px;
+    border: 0;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    width: 100px;
+    font-weight: bolder;
+    cursor: pointer;
+    transition: transform .2s;
+}
+
+.reset:hover {
+    transform: translateY(5px);
+    transition: transform .2s;
+}
+
+.win {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.616);
+    width: 100%;
+    height: 100vh;
+}
+
+.win p {
+    color: #fff;
+    font-weight: bold;
+    font-size: 50px;
+    text-align: center;
+    margin-top: 100px;
+    text-transform: uppercase;
+}
+
+.win section
+{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.turn {
+    color: #fff;
+    font-size: 30px;
+    width: max-content;
+}
+
+.turn span {
+    font-size: 40px;
+}
+
+@media (max-width: 500px) {
+    tbody {
+        width: 400px;
+        margin: 10px;
+    }
+
+    table td {
+        width: 80px;
+        height: 80px;
+        font-size: 60px;
+    }
+    
+}
