@@ -4,7 +4,7 @@ const TicTacToe = ({num}) => {
 
   const [turn, setTurn] = useState('x')
   const [cells, setCells] = useState(Array(9).fill(''))
-  const [winner, setWinner] = useState()
+  const [winner, setWinner] = useState(false)
   const [clickAmount, setClickAmount] = useState(0)
 
   const checkWinner = (squares) => {
@@ -34,13 +34,13 @@ const TicTacToe = ({num}) => {
           // do nothing
         }
         else if (
-          squares[pattern[0]] === squares[pattern[1]] && 
+          squares[pattern[0]] === squares[pattern[1]] &&
           squares[pattern[1]] === squares[pattern[2]]
         ) {
           setWinner(squares[pattern[0]])
           console.log(winner)
         } else if (
-          clickAmount === 8
+          clickAmount === 8 && winner === false
         )
         {
           setWinner('draw')
@@ -57,8 +57,8 @@ const TicTacToe = ({num}) => {
   }
   
   const handleClick = (num) => {
+    console.log(clickAmount)
     if (cells[num] !== '') {
-      setClickAmount(prevAmount => prevAmount - 1)
       return;
     }
 
@@ -70,8 +70,9 @@ const TicTacToe = ({num}) => {
       squares[num] = 'o'
       setTurn('x')
     }
-
-    setClickAmount(prevAmount => prevAmount + 1)
+    if (cells[num] === '') {
+      setClickAmount(prevAmount => prevAmount + 1)
+    }
     setCells(squares)
     checkWinner(squares)
   }
@@ -80,7 +81,10 @@ const TicTacToe = ({num}) => {
     return (
         <td 
           onClick={() => handleClick(num)} 
-            style={{color: cells[num] === 'x' ? "red" : "blue"}}
+            style={{
+              color: cells[num] === 'x' ? "red" : "blue",
+              pointerEvents: cells[num] !=='' && 'none'
+            }}
         >
           {cells[num]}
         </td>
