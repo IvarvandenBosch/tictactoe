@@ -5,7 +5,6 @@ const TicTacToe = ({num}) => {
   const [turn, setTurn] = useState('x')
   const [cells, setCells] = useState(Array(9).fill(''))
   const [winner, setWinner] = useState(false)
-  const [clickAmount, setClickAmount] = useState(0)
 
   const checkWinner = (squares) => {
     const combos = {
@@ -31,21 +30,28 @@ const TicTacToe = ({num}) => {
           squares[pattern[1]] === '' ||
           squares[pattern[2]] === '' 
         ) {
-          // do nothing
+          return true;
         }
         else if (
           squares[pattern[0]] === squares[pattern[1]] &&
           squares[pattern[1]] === squares[pattern[2]]
         ) {
           setWinner(squares[pattern[0]])
-          console.log(winner)
+          squares.length = num
+          return false;
         } else if (
-          clickAmount === 8 && winner === false
-        )
-        {
-          setWinner('draw')
-        }
-      }) 
+            // Checks if clicked 8 times and the array is full
+            !squares.includes('')
+          )
+          {
+            if (squares[pattern[0]] === 'x' || squares[pattern[0]] === 'o') {
+              if (squares[pattern[0]] !== squares[pattern[1]] && squares[pattern[1]] !== squares[pattern[2]]) {
+                console.log(squares[pattern[0]])
+                setWinner('draw')
+              }
+            }
+          }
+      })
     }
   }
 
@@ -53,11 +59,9 @@ const TicTacToe = ({num}) => {
     setCells(Array(9).fill(''))
     setWinner()
     setTurn('x')
-    setClickAmount(0)
   }
   
   const handleClick = (num) => {
-    console.log(clickAmount)
     if (cells[num] !== '') {
       return;
     }
@@ -69,9 +73,6 @@ const TicTacToe = ({num}) => {
     } else {
       squares[num] = 'o'
       setTurn('x')
-    }
-    if (cells[num] === '') {
-      setClickAmount(prevAmount => prevAmount + 1)
     }
     setCells(squares)
     checkWinner(squares)
