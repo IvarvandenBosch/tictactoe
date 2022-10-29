@@ -28,6 +28,10 @@ table td {
     aspect-ratio: 1;
 }
 
+table {
+    margin-inline: 20px;
+}
+
 .reset {
     padding-inline: 15px;
     padding-block: 7px;
@@ -83,15 +87,15 @@ table td {
     font-size: 40px;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
     tbody {
-        width: 400px;
-        margin: 10px;
+        width: 450px;
+        margin: 30px;
     }
 
     table td {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
         font-size: 60px;
     }
     

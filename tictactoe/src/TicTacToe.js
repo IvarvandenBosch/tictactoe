@@ -91,7 +91,6 @@ const TicTacToe = ({num}) => {
         </td>
       )
   }
-
   return (
     <div className='container'>
         <p className='turn'>Turn: <span style={{color: turn === 'x' ? "red" : "blue"}}>{turn}</span></p>
@@ -123,7 +122,7 @@ const TicTacToe = ({num}) => {
                 onClick={() => handleReset()} 
                 className="reset"
               >
-                Play again
+               play again
               </button>
             </div>
           </section>
