@@ -87,6 +87,29 @@ table {
     font-size: 40px;
 }
 
+.scoreboard {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.reset-button {
+    padding-block: 8px;
+    padding-inline: 5px;
+    cursor: pointer;
+    background-color: white;
+    transition: transform .4s;
+    font-weight: bold;
+}
+
+.reset-button:hover {
+    transform: translateY(8px);
+    transition: transform .2s;
+}
+
+
 @media (max-width: 600px) {
     tbody {
         width: 450px;

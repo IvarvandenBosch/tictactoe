@@ -1,10 +1,51 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 const TicTacToe = ({num}) => {
 
   const [turn, setTurn] = useState('x')
+  const [xScoreboard, setXScoreboard] = useLocalStorage('x-score', 0);
+  const [oScoreboard, setOScoreboard] = useLocalStorage('o-score', 0);
   const [cells, setCells] = useState(Array(9).fill(''))
   const [winner, setWinner] = useState(false)
+
+  useEffect(() => {
+    if (winner === 'o') {
+      setOScoreboard(prevScore => prevScore + 1)
+    } 
+    else if (winner === 'x') {
+      setXScoreboard(prevScore => prevScore + 1)
+    }
+  }, [winner]);
+
+  function useLocalStorage(key, initialValue) {
+    const [storedValue, setStoredValue] = useState(() => {
+      if (typeof window === "undefined") {
+        return initialValue;
+      }
+      try {
+        const item = window.localStorage.getItem(key);
+        return item ? JSON.parse(item) : initialValue;
+      } catch (error) {
+        console.log(error);
+        return initialValue;
+      }
+    });
+
+    const setValue = (value) => {
+      try {
+        const valueToStore =
+          value instanceof Function ? value(storedValue) : value;
+        setStoredValue(valueToStore);
+        if (typeof window !== "undefined") {
+          window.localStorage.setItem(key, JSON.stringify(valueToStore));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    return [storedValue, setValue];
+  }
+
 
   const checkWinner = (squares) => {
     const combos = {
@@ -46,13 +87,18 @@ const TicTacToe = ({num}) => {
           {
             if (squares[pattern[0]] === 'x' || squares[pattern[0]] === 'o') {
               if (squares[pattern[0]] !== squares[pattern[1]] && squares[pattern[1]] !== squares[pattern[2]]) {
-                console.log(squares[pattern[0]])
+                // console.log(squares[pattern[0]])
                 setWinner('draw')
               }
             }
           }
       })
     }
+  }
+
+  const handleScoreReset = () => {
+    setOScoreboard(0)
+    setXScoreboard(0)
   }
 
   const handleReset = () => {
@@ -128,6 +174,12 @@ const TicTacToe = ({num}) => {
           </section>
         </div>
       )}
+        <div className='scoreboard' style={{color: '#fff'}}>
+          <h1>Scoreboard</h1>
+          <p><span style={{color: 'blue'}} >o</span> has won {oScoreboard} times</p>
+          <p><span style={{color: 'red'}} >x</span> has won {xScoreboard} times</p>
+        </div>
+        <button className='reset-button' onClick={handleScoreReset}>Reset Scoreboard</button>
     </div>
   )
 }
