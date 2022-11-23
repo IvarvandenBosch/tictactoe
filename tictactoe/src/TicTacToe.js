@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import useLocalStorage from './useLocalStorage';
 
 const TicTacToe = ({num}) => {
 
@@ -16,36 +17,6 @@ const TicTacToe = ({num}) => {
       setXScoreboard(prevScore => prevScore + 1)
     }
   }, [winner]);
-
-  function useLocalStorage(key, initialValue) {
-    const [storedValue, setStoredValue] = useState(() => {
-      if (typeof window === "undefined") {
-        return initialValue;
-      }
-      try {
-        const item = window.localStorage.getItem(key);
-        return item ? JSON.parse(item) : initialValue;
-      } catch (error) {
-        console.log(error);
-        return initialValue;
-      }
-    });
-
-    const setValue = (value) => {
-      try {
-        const valueToStore =
-          value instanceof Function ? value(storedValue) : value;
-        setStoredValue(valueToStore);
-        if (typeof window !== "undefined") {
-          window.localStorage.setItem(key, JSON.stringify(valueToStore));
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    return [storedValue, setValue];
-  }
-
 
   const checkWinner = (squares) => {
     const combos = {
@@ -76,7 +47,7 @@ const TicTacToe = ({num}) => {
         else if (
           squares[pattern[0]] === squares[pattern[1]] &&
           squares[pattern[1]] === squares[pattern[2]]
-        ) {
+        ) { 
           setWinner(squares[pattern[0]])
           squares.length = num
           return false;
